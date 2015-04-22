@@ -13,7 +13,6 @@ type
     Edit1: TEdit;
     Button1: TButton;
     Button2: TButton;
-    procedure Refresh();
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -29,7 +28,6 @@ var
 
 implementation
 
-uses addForm;
 
 {$R *.dfm}
 
@@ -39,21 +37,12 @@ type
 function naturalsplinevalue (n      : Integer;
                              x,f    : array of Extended;
                              xx     : Extended;
-                             var st : Integer) : Extended; stdcall external 'dll.dll';
+                             var st : Integer) : Extended; external 'dll.dll';
 
 procedure naturalsplinecoeffns (n      : Integer;
                                 x,f    : array of Extended;
                                 var a  : array of TExtendedArray;
-                                var st : Integer); stdcall external 'dll.dll';
-
-procedure TForm1.Refresh();
-var
- output : string;
- outputValue : Extended;
-begin
-
-
-end;
+                                var st : Integer); external 'dll.dll';
 
 procedure TForm1.Button1Click(Sender: TObject);
 var
@@ -64,16 +53,29 @@ var
   outVal: Extended;
   outString : string;
 begin
-  SetLength(x, 8);
-  SetLength(f, 8);
-  
+  SetLength(x, 9);
+  SetLength(f, 9);
+
+  xx := 4;
+
+  x[1] := 1;
+  x[2] := 2;
+  x[3] := 3;
+  x[5] := 5;
+
+  f[1] := 1;
+  f[2] := 2;
+  f[3] := 3;
+  f[5] := 5;
+
   n := 4;
 
   outVal := naturalsplinevalue(n - 1, x,f, xx, st);
 
-  Str(outVal,outString);
+  //outString := FormatFloat('0.0000000000000',outVal)   ;
+  Edit1.Text :=FloatToStr(outVal);
 
-  Edit1.Text := outString;
+  //Edit1.Text := outString;
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);

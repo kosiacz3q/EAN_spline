@@ -61,7 +61,8 @@ var i,k   : Integer;
     b     : array of Extended;
     c     : array of Extended;
 begin
-  if n<1
+
+    if n<1
     then st:=1
     else if (xx<x[0]) or (xx>x[n])
            then st:=3
@@ -143,8 +144,6 @@ begin
              y:=y*z+a[i];
            naturalsplinevalue:=y
          end;
-
-         naturalsplinevalue:=1;
 end;
 
 type
@@ -271,10 +270,15 @@ begin
          end
 end;
 
+procedure test();
+begin
+
+end;
 
 exports
   naturalsplinevalue,
-  naturalsplinecoeffns;
+  naturalsplinecoeffns,
+  test;
 
 begin
 end.
