@@ -55,25 +55,32 @@ var
 begin
   SetLength(x, 9);
   SetLength(f, 9);
-
+  outVal:= -1;
   xx := 4;
 
   x[1] := 1;
   x[2] := 2;
   x[3] := 3;
-  x[5] := 5;
+  x[4] := 5;
 
   f[1] := 1;
   f[2] := 2;
   f[3] := 3;
-  f[5] := 5;
+  f[4] := 5;
 
   n := 4;
 
-  outVal := naturalsplinevalue(n - 1, x,f, xx, st);
+  outVal := naturalsplinevalue(n, x,f, xx, st);
+
+  if st <> 0 then
+    Edit1.Text := 'some error occured ' + IntToStr(st)
+  else
+    Edit1.Text := FloatToStr(outVal);
+
+
 
   //outString := FormatFloat('0.0000000000000',outVal)   ;
-  Edit1.Text :=FloatToStr(outVal);
+
 
   //Edit1.Text := outString;
 end;
@@ -95,8 +102,10 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
+  //System.SysUtils.TFormatSettings.Create.DecimalSeparator := '.';
 
-    
+    Application.UpdateFormatSettings := false;
+
 
     Refresh();
 end;
