@@ -61,10 +61,10 @@ var i,k   : Integer;
     b     : array of Extended;
     c     : array of Extended;
 begin
+
     SetLength(b, n + 1 + 0 + 10);
     SetLength(d, n + 2 - 2 + 10);
     SetLength(c, n + 3 - 1 + 10);
-
 
     if n<1
     then st:=1
@@ -197,6 +197,11 @@ var i,k        : Integer;
     b          : array of Extended;
     c          : array of Extended;
 begin
+
+  SetLength(b, n + 1 + 0 + 10);
+  SetLength(d, n + 2 - 2 + 10);
+  SetLength(c, n + 3 - 1 + 10);
+
   if n<1
     then st:=1
     else begin

@@ -10,9 +10,9 @@ uses
 type
   TForm1 = class(TForm)
     XPManifest1: TXPManifest;
-    Edit1: TEdit;
     Button1: TButton;
     Button2: TButton;
+    Memo1: TMemo;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -27,7 +27,6 @@ var
   Form1: TForm1;
 
 implementation
-
 
 {$R *.dfm}
 
@@ -73,16 +72,9 @@ begin
   outVal := naturalsplinevalue(n, x,f, xx, st);
 
   if st <> 0 then
-    Edit1.Text := 'some error occured ' + IntToStr(st)
+    Memo1.Text := 'some error occured ' + IntToStr(st)
   else
-    Edit1.Text := FloatToStr(outVal);
-
-
-
-  //outString := FormatFloat('0.0000000000000',outVal)   ;
-
-
-  //Edit1.Text := outString;
+    Memo1.Text := FloatToStr(outVal);
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
@@ -91,24 +83,58 @@ var
   x,f    : array of Extended;
   a  : array of TExtendedArray;
   st : Integer ;
-  i : Integer;
+  i,j : Integer;
 begin
+    n := 6;
+
+    SetLength(x, 10);
+    SetLength(f, 10);
+
+    f[1] := 4;
+    f[2] := 1;
+    f[3] := 1.1;
+    f[4] := 9;
+    f[5] := 3;
+    f[6] := 0.2;
+
+    x[1] := 1;
+    x[2] := 2;
+    x[3] := 3;
+    x[4] := 5;
+    x[5] := 9;
+    x[6] := 10;
 
     SetLength(a, 10);
 
     for i := 0 to 10 do
       SetLength(a[i], 10);
+
+    for i := 0 to 10 do
+      for j := 0 to 10 do
+        a[i,j] := 0;
+
+    naturalsplinecoeffns(n,f,x,a,st);
+
+    if st <> 0 then
+       Memo1.Text := 'some error occured ' + IntToStr(st)
+    else
+    begin
+        Memo1.Text := '';
+        for j := 0 to 9 do
+        begin
+          for i := 0 to 9 do
+            Memo1.Text :=  Memo1.Text +  ' ' +  FloatToStr(a[i,j]);
+          Memo1.Text := Memo1.Text + sLineBreak;
+        end;
+    end;
+
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  //System.SysUtils.TFormatSettings.Create.DecimalSeparator := '.';
-
     Application.UpdateFormatSettings := false;
-
 
     Refresh();
 end;
-
 
 end.

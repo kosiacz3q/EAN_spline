@@ -14,21 +14,13 @@ object Form1: TForm1
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object Edit1: TEdit
-    Left = 128
-    Top = 48
-    Width = 121
-    Height = 21
-    TabOrder = 0
-    Text = 'Edit1'
-  end
   object Button1: TButton
     Left = 88
     Top = 264
     Width = 75
     Height = 25
     Caption = 'val'
-    TabOrder = 1
+    TabOrder = 0
     OnClick = Button1Click
   end
   object Button2: TButton
@@ -37,8 +29,17 @@ object Form1: TForm1
     Width = 75
     Height = 25
     Caption = 'coeffs'
-    TabOrder = 2
+    TabOrder = 1
     OnClick = Button2Click
+  end
+  object Memo1: TMemo
+    Left = 32
+    Top = 16
+    Width = 497
+    Height = 242
+    Lines.Strings = (
+      'Memo1')
+    TabOrder = 2
   end
   object XPManifest1: TXPManifest
     Left = 816
