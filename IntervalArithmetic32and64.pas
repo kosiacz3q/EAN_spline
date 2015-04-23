@@ -18,7 +18,23 @@ uses uTExtendedX87;
 type Extended = TExtendedX87;
 {$ENDIF}
 type interval = record
-                  a, b : Extended
+                  a, b : Extended;
+                  Constructor Create(const a,b :Extended);  overload;
+                  Constructor Create(const a :Extended);   overload;
+
+                  class operator GreaterThan(const first,second : interval ) : Boolean;
+                  class operator GreaterThanOrEqual(const first,second : interval ) : Boolean;
+                  class operator LessThan(const first,second : interval ) : Boolean;
+                  class operator LessThanOrEqual(const first,second : interval ) : Boolean;
+                  class operator Equal(const first,second : interval ) : Boolean;
+                  class operator Subtract(const first,second : interval ) : interval;
+                  class operator Subtract(const first :Integer; const second : interval ) : interval;
+                  class operator Divide(const first,second : interval ) : interval;
+                  class operator Add(const first,second : interval ) : interval;
+                  class operator Multiply(const first,second : interval ) : interval;
+                  class operator Multiply(const first :Integer; const second : interval ) : interval;
+                  class operator Implicit(const value : Extended) : interval;
+
                 end;
 // Basic arithmetic operations for proper intervals
 function int_width (const x : interval) : Extended;
@@ -196,6 +212,83 @@ implementation
               '0.0000000000000004440892098500626161694526672363281250',
               '0.0000000000000002220446049250313080847263336181640625');
 {$ENDIF}
+
+  constructor interval.Create(const a: Extended; const b: Extended);
+  begin
+    Self.a := a;
+    Self.b := b;
+  end;
+
+  constructor interval.Create(const a: Extended);
+  begin
+    Self.a := a;
+    Self.b := a;
+  end;
+
+  class operator interval.GreaterThan(const first,second : interval) : Boolean;
+  begin
+      Result := first.a > second.b;
+  end;
+
+  class operator interval.GreaterThanOrEqual(const first,second : interval ) : Boolean;
+  begin
+      Result := first.a >= second.b;
+  end;
+
+  class operator interval.LessThan(const first,second : interval ) : Boolean;
+  begin
+      Result := first.a < second.b;
+  end;
+
+  class operator interval.LessThanOrEqual(const first,second : interval ) : Boolean;
+  begin
+      Result := first.a <= second.b;
+  end;
+
+  class operator interval.Equal(const first,second : interval ) : Boolean;
+  begin
+      Result := (first.a = second.a) And (first.b = second.b);
+  end;
+
+  class operator interval.Subtract(const first,second : interval ) : interval;
+  begin
+      Result := isub(first, second);
+  end;
+
+  class operator interval.Subtract(const first :Integer; const second : interval ) : interval;
+  begin
+    Result.a := first;
+    Result.b := first;
+
+    Result := isub(Result,second);
+  end;
+
+  class operator interval.Divide(const first,second : interval ) : interval;
+  begin
+      Result := idiv(first, second);
+  end;
+
+  class operator interval.Add(const first,second : interval ) : interval;
+  begin
+      Result := iadd(first, second);
+  end;
+
+  class operator interval.Multiply(const first,second : interval ) : interval;
+  begin
+      Result := imul(first, second);
+  end;
+
+  class operator interval.Multiply(const first :Integer; const second : interval ) : interval;
+  begin
+    Result.a := second.a * first;
+    Result.b := second.b * first;
+  end;
+
+  class operator interval.Implicit(const value : Extended) : interval;
+  begin
+      Result.a := value;
+      Result.b := value;
+  end;
 
   function int_width (const x : interval) : Extended;
   begin

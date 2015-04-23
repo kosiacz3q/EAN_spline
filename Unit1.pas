@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Buttons, Grids, ValEdit, StrUtils, XPMan, jpeg,
-  ExtCtrls, ComCtrls;
+  ExtCtrls, ComCtrls,
+  IntervalArithmetic32and64;
 
 type
   TForm1 = class(TForm)
@@ -13,9 +14,11 @@ type
     Button1: TButton;
     Button2: TButton;
     Memo1: TMemo;
+    ButtonIntervalValue: TButton;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure ButtonIntervalValueClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -50,11 +53,9 @@ var
   xx     : Extended;
   var st : Integer ;
   outVal: Extended;
-  outString : string;
 begin
   SetLength(x, 9);
   SetLength(f, 9);
-  outVal:= -1;
   xx := 4;
 
   x[1] := 1;
@@ -127,6 +128,39 @@ begin
           Memo1.Text := Memo1.Text + sLineBreak;
         end;
     end;
+
+end;
+
+procedure TForm1.ButtonIntervalValueClick(Sender: TObject);
+var
+  n      : Integer;
+  x,f    : array of interval;
+  xx     : interval;
+  var st : Integer ;
+  outVal: interval;
+begin
+  SetLength(x, 9);
+  SetLength(f, 9);
+  xx := 4;
+
+  x[1] := 1;
+  x[2] := 2;
+  x[3] := 3;
+  x[4] := 5;
+
+  f[1] := 1;
+  f[2] := 2;
+  f[3] := 3;
+  f[4] := 5;
+
+  n := 4;
+
+  outVal := naturalsplinevalueInterval(n, x,f, xx, st);
+
+  if st <> 0 then
+    Memo1.Text := 'some error occured ' + IntToStr(st)
+  else
+    Memo1.Text := FloatToStr(outVal);
 
 end;
 

@@ -15,8 +15,8 @@ object Form1: TForm1
   PixelsPerInch = 96
   TextHeight = 13
   object Button1: TButton
-    Left = 88
-    Top = 264
+    Left = 48
+    Top = 328
     Width = 75
     Height = 25
     Caption = 'val'
@@ -24,8 +24,8 @@ object Form1: TForm1
     OnClick = Button1Click
   end
   object Button2: TButton
-    Left = 88
-    Top = 336
+    Left = 48
+    Top = 384
     Width = 75
     Height = 25
     Caption = 'coeffs'
@@ -34,12 +34,21 @@ object Form1: TForm1
   end
   object Memo1: TMemo
     Left = 32
-    Top = 16
-    Width = 497
-    Height = 242
+    Top = 8
+    Width = 561
+    Height = 241
     Lines.Strings = (
       'Memo1')
     TabOrder = 2
+  end
+  object ButtonIntervalValue: TButton
+    Left = 320
+    Top = 328
+    Width = 145
+    Height = 25
+    Caption = 'ButtonIntervalValue'
+    TabOrder = 3
+    OnClick = ButtonIntervalValueClick
   end
   object XPManifest1: TXPManifest
     Left = 816
