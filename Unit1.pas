@@ -26,6 +26,9 @@ type
      selectedID : integer;
   end;
 
+  function resultToString(const res : Extended) : string; overload;
+  function resultToString(const res : Interval) : string; overload;
+
 var
   Form1: TForm1;
 
@@ -50,6 +53,22 @@ procedure naturalsplinecoeffns (n      : Integer;
                                 x,f    : array of Extended;
                                 var a  : array of TExtendedArray;
                                 var st : Integer); external 'dll.dll';
+
+function resultToString(const res : Extended) : string;  overload;
+var
+    outLeft, outRight : string;
+begin
+    iends_to_strings (res, outLeft , outRight);
+    Result := outLeft;
+end;
+
+function resultToString(const res : Interval) : string;  overload;
+var
+    outLeft, outRight : string;
+begin
+    iends_to_strings (res, outLeft , outRight);
+    Result := '[' + outLeft + ',' + outRight + ']';
+end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 var
@@ -80,7 +99,7 @@ begin
   if st <> 0 then
     Memo1.Text := 'some error occured ' + IntToStr(st)
   else
-    Memo1.Text := FloatToStr(outVal);
+    Memo1.Text := resultToString(outVal);
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
@@ -129,7 +148,7 @@ begin
         for j := 0 to 9 do
         begin
           for i := 0 to 9 do
-            Memo1.Text :=  Memo1.Text +  ' ' +  FloatToStr(a[i,j]);
+            Memo1.Text := ' ' + resultToString(a[i,j]);
           Memo1.Text := Memo1.Text + sLineBreak;
         end;
     end;
@@ -165,7 +184,9 @@ begin
   if st <> 0 then
     Memo1.Text := 'some error occured ' + IntToStr(st)
   else
-    Memo1.Text := 'works';// FloatToStr(outVal);
+  begin
+    Memo1.Text := resultToString(outVal);
+  end;
 
 end;
 
