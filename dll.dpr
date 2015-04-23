@@ -13,7 +13,8 @@ library dll;
 uses
   SysUtils,
   Classes,
-  StrUtils;
+  StrUtils,
+  IntervalArithmetic32and64 in 'IntervalArithmetic32and64.pas';
 
 {$R *.res}
 
@@ -273,6 +274,7 @@ begin
                y:=y/2;
                a[0,i]:=((-z*xi+y)*xi-v)*xi+u;
                u:=3*z*xi;
+
                a[1,i]:=(u-2*y)*xi+v;
                a[2,i]:=y-u;
                a[3,i]:=z
