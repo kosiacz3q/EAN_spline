@@ -41,6 +41,11 @@ function naturalsplinevalue (n      : Integer;
                              xx     : Extended;
                              var st : Integer) : Extended; external 'dll.dll';
 
+function naturalsplinevalueInterval (n      : Integer;
+                             x,f    : array of interval;
+                             xx     : interval;
+                             var st : Integer) : interval; external 'dll.dll';
+
 procedure naturalsplinecoeffns (n      : Integer;
                                 x,f    : array of Extended;
                                 var a  : array of TExtendedArray;
@@ -160,7 +165,7 @@ begin
   if st <> 0 then
     Memo1.Text := 'some error occured ' + IntToStr(st)
   else
-    Memo1.Text := FloatToStr(outVal);
+    Memo1.Text := 'works';// FloatToStr(outVal);
 
 end;
 
