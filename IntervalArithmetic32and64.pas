@@ -34,6 +34,7 @@ type interval = record
                   class operator Multiply(const first,second : interval ) : interval;
                   class operator Multiply(const first :Integer; const second : interval ) : interval;
                   class operator Implicit(const value : Extended) : interval;
+                  class operator Negative(const value : interval) : interval;
 
                 end;
 // Basic arithmetic operations for proper intervals
@@ -288,6 +289,11 @@ implementation
   begin
       Result.a := value;
       Result.b := value;
+  end;
+
+  class operator interval.Negative(const value : interval) : interval;
+  begin
+    Result := opposite(value);
   end;
 
   function int_width (const x : interval) : Extended;

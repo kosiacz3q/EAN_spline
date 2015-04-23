@@ -12,13 +12,15 @@ type
   TForm1 = class(TForm)
     XPManifest1: TXPManifest;
     Button1: TButton;
-    Button2: TButton;
+    ButtonSplineCoeffs: TButton;
     Memo1: TMemo;
     ButtonIntervalValue: TButton;
+    ButtonIntervalCoeffs: TButton;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
+    procedure ButtonSplineCoeffsClick(Sender: TObject);
     procedure ButtonIntervalValueClick(Sender: TObject);
+    procedure ButtonIntervalCoeffsClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -39,6 +41,9 @@ implementation
 type
   TExtendedArray = array of Extended;
 
+type
+  TIntervalArray = array of interval;
+
 function naturalsplinevalue (n      : Integer;
                              x,f    : array of Extended;
                              xx     : Extended;
@@ -52,6 +57,11 @@ function naturalsplinevalueInterval (n      : Integer;
 procedure naturalsplinecoeffns (n      : Integer;
                                 x,f    : array of Extended;
                                 var a  : array of TExtendedArray;
+                                var st : Integer); external 'dll.dll';
+
+procedure naturalsplinecoeffnsInterval (n      : Integer;
+                                x,f    : array of interval;
+                                var a  : array of TIntervalArray;
                                 var st : Integer); external 'dll.dll';
 
 function resultToString(const res : Extended) : string;  overload;
@@ -102,7 +112,7 @@ begin
     Memo1.Text := resultToString(outVal);
 end;
 
-procedure TForm1.Button2Click(Sender: TObject);
+procedure TForm1.ButtonSplineCoeffsClick(Sender: TObject);
 var
   n      : Integer;
   x,f    : array of Extended;
@@ -145,14 +155,68 @@ begin
     else
     begin
         Memo1.Text := '';
-        for j := 0 to 9 do
+        for i := 0 to n do
         begin
-          for i := 0 to 9 do
-            Memo1.Text := ' ' + resultToString(a[i,j]);
+          for j := 0 to 3 do
+            Memo1.Text := Memo1.Text + ' ' + resultToString(a[j,i]);
+
           Memo1.Text := Memo1.Text + sLineBreak;
         end;
     end;
 
+end;
+
+procedure TForm1.ButtonIntervalCoeffsClick(Sender: TObject);
+var
+  n      : Integer;
+  x,f    : array of interval;
+  a  : array of TIntervalArray;
+  st : Integer ;
+  i,j : Integer;
+begin
+    n := 6;
+
+    SetLength(x, 10);
+    SetLength(f, 10);
+
+    f[1] := 4;
+    f[2] := 1;
+    f[3] := 1.1;
+    f[4] := 9;
+    f[5] := 3;
+    f[6] := 0.2;
+
+    x[1] := 1;
+    x[2] := 2;
+    x[3] := 3;
+    x[4] := 5;
+    x[5] := 9;
+    x[6] := 10;
+
+    SetLength(a, 11);
+
+    for i := 0 to 10 do
+      SetLength(a[i], 10);
+
+    for i := 0 to 10 do
+      for j := 0 to 10 do
+        a[i,j] := 0;
+
+    naturalsplinecoeffnsInterval(n,f,x,a,st);
+
+    if st <> 0 then
+       Memo1.Text := 'some error occured ' + IntToStr(st)
+    else
+    begin
+        Memo1.Text := '';
+        for i := 0 to n do
+        begin
+          for j := 0 to 3 do
+            Memo1.Text := Memo1.Text + ' ' + resultToString(a[j,i]);
+
+          Memo1.Text := Memo1.Text + sLineBreak;
+        end;
+    end;
 end;
 
 procedure TForm1.ButtonIntervalValueClick(Sender: TObject);

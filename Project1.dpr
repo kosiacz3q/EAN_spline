@@ -3,7 +3,8 @@ program Project1;
 uses
   Forms,
   Windows,
-  Unit1 in 'Unit1.pas' {Form1};
+  Unit1 in 'Unit1.pas' {Form1},
+  IntervalArithmetic32and64 in 'IntervalArithmetic32and64.pas';
 
 {$R *.res}
 
