@@ -3,7 +3,7 @@ object Form1: TForm1
   Top = 145
   Caption = 'Interpolacja funkcjami sklejanymi trzeciego stopnia'
   ClientHeight = 538
-  ClientWidth = 996
+  ClientWidth = 981
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,32 +14,14 @@ object Form1: TForm1
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object Button1: TButton
-    Left = 89
-    Top = 505
-    Width = 75
-    Height = 25
-    Caption = 'val'
-    TabOrder = 0
-    OnClick = Button1Click
-  end
   object ButtonSplineCoeffs: TButton
     Left = 8
     Top = 505
     Width = 75
     Height = 25
     Caption = 'coeffs'
-    TabOrder = 1
+    TabOrder = 0
     OnClick = ButtonSplineCoeffsClick
-  end
-  object Memo1: TMemo
-    Left = 592
-    Top = 480
-    Width = 153
-    Height = 33
-    Lines.Strings = (
-      'Memo1')
-    TabOrder = 2
   end
   object ButtonIntervalValue: TButton
     Left = 170
@@ -47,7 +29,7 @@ object Form1: TForm1
     Width = 145
     Height = 25
     Caption = 'ButtonIntervalValue'
-    TabOrder = 3
+    TabOrder = 1
     OnClick = ButtonIntervalValueClick
   end
   object ButtonIntervalCoeffs: TButton
@@ -56,15 +38,15 @@ object Form1: TForm1
     Width = 216
     Height = 25
     Caption = 'ButtonIntervalCoeffs'
-    TabOrder = 4
+    TabOrder = 2
     OnClick = ButtonIntervalCoeffsClick
   end
   object TabControl1: TTabControl
     Left = 8
     Top = 8
-    Width = 961
+    Width = 960
     Height = 466
-    TabOrder = 5
+    TabOrder = 3
     Tabs.Strings = (
       'warto'#347#263' funkcji sklejanej'
       'warto'#347#263' funkcji sklejanej (interwa'#322')'

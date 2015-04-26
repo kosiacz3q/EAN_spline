@@ -83,7 +83,7 @@ begin
                 end;
   if st=0
     then begin
-           d[0]:=0;
+             d[0]:=0;
            d[n]:=0;
            if n>1
              then begin

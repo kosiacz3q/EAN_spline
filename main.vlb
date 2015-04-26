@@ -1,10 +1,4 @@
-﻿[Memo1]
-Coordinates=260,0,64,58
-
-[Button1]
-Coordinates=10,78,59,58
-
-[XPManifest1]
+﻿[XPManifest1]
 Coordinates=161,1,87,36
 
 [ButtonIntervalValue]
@@ -20,7 +14,7 @@ Coordinates=230,100,131,58
 Coordinates=460,80,85,36
 
 []
-Coordinates=590,70,80,58
+Coordinates=260,0,64,58
 Visible=True
 LayerNames=ggg
 

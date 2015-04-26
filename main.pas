@@ -14,9 +14,7 @@ uses
 type
   TForm1 = class(TForm)
     XPManifest1: TXPManifest;
-    Button1: TButton;
     ButtonSplineCoeffs: TButton;
-    Memo1: TMemo;
     ButtonIntervalValue: TButton;
     ButtonIntervalCoeffs: TButton;
     TabControl1: TTabControl;
@@ -56,10 +54,7 @@ type
 type
   TIntervalArray = array of interval;
 
-function naturalsplinevalue (n      : Integer;
-                             x,f    : array of Extended;
-                             xx     : Extended;
-                             var st : Integer) : Extended; external 'dll.dll';
+
 
 function naturalsplinevalueInterval (n      : Integer;
                              x,f    : array of interval;
