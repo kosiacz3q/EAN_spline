@@ -3,8 +3,9 @@ program Project1;
 uses
   Forms,
   Windows,
-  Unit1 in 'Unit1.pas' {Form1},
-  IntervalArithmetic32and64 in 'IntervalArithmetic32and64.pas';
+  main in 'main.pas' {Form1},
+  IntervalArithmetic32and64 in 'IntervalArithmetic32and64.pas',
+  SplineVal in 'SplineVal.pas' {SplineValForm};
 
 {$R *.res}
 
@@ -13,5 +14,6 @@ begin
    if GetLastError() <> 0 then Halt;
   Application.Initialize;
   Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TSplineValForm, SplineValForm);
   Application.Run;
 end.

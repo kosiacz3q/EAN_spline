@@ -33,10 +33,10 @@ object Form1: TForm1
     OnClick = ButtonSplineCoeffsClick
   end
   object Memo1: TMemo
-    Left = 8
-    Top = 8
-    Width = 985
-    Height = 491
+    Left = 592
+    Top = 480
+    Width = 153
+    Height = 33
     Lines.Strings = (
       'Memo1')
     TabOrder = 2
@@ -59,8 +59,22 @@ object Form1: TForm1
     TabOrder = 4
     OnClick = ButtonIntervalCoeffsClick
   end
+  object TabControl1: TTabControl
+    Left = 8
+    Top = 8
+    Width = 961
+    Height = 466
+    TabOrder = 5
+    Tabs.Strings = (
+      'warto'#347#263' funkcji sklejanej'
+      'warto'#347#263' funkcji sklejanej (interwa'#322')'
+      'wsp'#243#322'czynniki funkcji sklejanej'
+      'wsp'#243#322'czynniki funkcji sklejanej (interwa'#322')')
+    TabIndex = 0
+    OnChange = TabControl1Change
+  end
   object XPManifest1: TXPManifest
-    Left = 816
-    Top = 464
+    Left = 840
+    Top = 480
   end
 end

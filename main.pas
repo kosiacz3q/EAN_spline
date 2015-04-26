@@ -1,4 +1,4 @@
-unit Unit1;
+unit main;
 
 interface
 
@@ -6,7 +6,10 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Buttons, Grids, ValEdit, StrUtils, XPMan, jpeg,
   ExtCtrls, ComCtrls,
-  IntervalArithmetic32and64;
+  IntervalArithmetic32and64, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, SplineVal;
 
 type
   TForm1 = class(TForm)
@@ -16,11 +19,19 @@ type
     Memo1: TMemo;
     ButtonIntervalValue: TButton;
     ButtonIntervalCoeffs: TButton;
+    TabControl1: TTabControl;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure ButtonSplineCoeffsClick(Sender: TObject);
     procedure ButtonIntervalValueClick(Sender: TObject);
     procedure ButtonIntervalCoeffsClick(Sender: TObject);
+
+    procedure TabControl1Visibility(visible : Boolean);
+    procedure TabControl2Visibility(visible : Boolean);
+    procedure TabControl3Visibility(visible : Boolean);
+    procedure TabControl4Visibility(visible : Boolean);
+
+    procedure TabControl1Change(Sender: TObject);
 
   private
     { Private declarations }
@@ -33,6 +44,7 @@ type
 
 var
   Form1: TForm1;
+  SplineValForm: TSplineValForm;
 
 implementation
 
@@ -258,7 +270,64 @@ procedure TForm1.FormCreate(Sender: TObject);
 begin
     Application.UpdateFormatSettings := false;
 
+    SplineValForm := TSplineValForm.Create(TabControl1);
+    SplineValForm.Parent := TabControl1;
+    SplineValForm.Visible := True;
+
     Refresh();
+end;
+
+procedure TForm1.TabControl1Change(Sender: TObject);
+begin
+
+    Memo1.Text := IntToStr(TabControl1.TabIndex);
+
+    case TabControl1.TabIndex of
+      0 : begin
+          TabControl1Visibility(True);
+          TabControl2Visibility(False);
+          TabControl3Visibility(False);
+          TabControl4Visibility(False);
+      end;
+      1 : begin
+          TabControl1Visibility(False);
+          TabControl2Visibility(True);
+          TabControl3Visibility(False);
+          TabControl4Visibility(False);
+      end;
+      2 : begin
+          TabControl1Visibility(False);
+          TabControl2Visibility(False);
+          TabControl3Visibility(True);
+          TabControl4Visibility(False);
+      end;
+      3 : begin
+          TabControl1Visibility(False);
+          TabControl2Visibility(False);
+          TabControl3Visibility(False);
+          TabControl4Visibility(True);
+      end;
+    end;
+end;
+
+procedure TForm1.TabControl1Visibility(visible : Boolean);
+begin
+   SplineValForm.Visible := visible;
+end;
+
+procedure TForm1.TabControl2Visibility(visible : Boolean);
+begin
+   {feggdjgdsdgf}
+end;
+
+procedure TForm1.TabControl3Visibility(visible : Boolean);
+begin
+   {feggdjgdsdgf}
+end;
+
+procedure TForm1.TabControl4Visibility(visible : Boolean);
+begin
+   {feggdjgdsdgf}
 end;
 
 end.
