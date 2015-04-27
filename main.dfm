@@ -23,22 +23,13 @@ object Form1: TForm1
     TabOrder = 0
     OnClick = ButtonSplineCoeffsClick
   end
-  object ButtonIntervalValue: TButton
-    Left = 170
-    Top = 505
-    Width = 145
-    Height = 25
-    Caption = 'ButtonIntervalValue'
-    TabOrder = 1
-    OnClick = ButtonIntervalValueClick
-  end
   object ButtonIntervalCoeffs: TButton
     Left = 321
     Top = 505
     Width = 216
     Height = 25
     Caption = 'ButtonIntervalCoeffs'
-    TabOrder = 2
+    TabOrder = 1
     OnClick = ButtonIntervalCoeffsClick
   end
   object TabControl1: TTabControl
@@ -46,7 +37,7 @@ object Form1: TForm1
     Top = 8
     Width = 960
     Height = 466
-    TabOrder = 3
+    TabOrder = 2
     Tabs.Strings = (
       'warto'#347#263' funkcji sklejanej'
       'warto'#347#263' funkcji sklejanej (interwa'#322')'
@@ -62,7 +53,7 @@ object Form1: TForm1
     Height = 25
     Lines.Strings = (
       'Memo1')
-    TabOrder = 4
+    TabOrder = 3
   end
   object XPManifest1: TXPManifest
     Left = 840

@@ -9,20 +9,18 @@ uses
   IntervalArithmetic32and64, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, SplineVal;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, SplineVal, SplineIntervalVal;
 
 type
   TForm1 = class(TForm)
     XPManifest1: TXPManifest;
     ButtonSplineCoeffs: TButton;
-    ButtonIntervalValue: TButton;
     ButtonIntervalCoeffs: TButton;
     TabControl1: TTabControl;
     Memo1: TMemo;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure ButtonSplineCoeffsClick(Sender: TObject);
-    procedure ButtonIntervalValueClick(Sender: TObject);
     procedure ButtonIntervalCoeffsClick(Sender: TObject);
 
     procedure TabControl1Visibility(visible : Boolean);
@@ -44,6 +42,7 @@ type
 var
   Form1: TForm1;
   SplineValForm: TSplineValForm;
+  SplineIntervalValForm : TSplineIntervalValForm;
 
 implementation
 
@@ -54,13 +53,6 @@ type
 
 type
   TIntervalArray = array of interval;
-
-
-
-function naturalsplinevalueInterval (n      : Integer;
-                             x,f    : array of interval;
-                             xx     : interval;
-                             var st : Integer) : interval; external 'dll.dll';
 
 procedure naturalsplinecoeffns (n      : Integer;
                                 x,f    : array of Extended;
@@ -227,41 +219,6 @@ begin
     end;
 end;
 
-procedure TForm1.ButtonIntervalValueClick(Sender: TObject);
-var
-  n      : Integer;
-  x,f    : array of interval;
-  xx     : interval;
-  var st : Integer ;
-  outVal: interval;
-begin
-  SetLength(x, 9);
-  SetLength(f, 9);
-  xx := 4;
-
-  x[1] := 1;
-  x[2] := 2;
-  x[3] := 3;
-  x[4] := 5;
-
-  f[1] := 1;
-  f[2] := 2;
-  f[3] := 3;
-  f[4] := 5;
-
-  n := 4;
-
-  outVal := naturalsplinevalueInterval(n, x,f, xx, st);
-
-  if st <> 0 then
-    Memo1.Text := 'some error occured ' + IntToStr(st)
-  else
-  begin
-    Memo1.Text := resultToString(outVal);
-  end;
-
-end;
-
 procedure TForm1.FormCreate(Sender: TObject);
 begin
     Application.UpdateFormatSettings := false;
@@ -269,6 +226,10 @@ begin
     SplineValForm := TSplineValForm.Create(TabControl1);
     SplineValForm.Parent := TabControl1;
     SplineValForm.Visible := True;
+
+    SplineIntervalValForm := TSplineIntervalValForm.Create(TabControl1);
+    SplineIntervalValForm.Parent := TabControl1;
+    SplineIntervalValForm.Visible := False;
 
     Refresh();
 end;
@@ -313,7 +274,7 @@ end;
 
 procedure TForm1.TabControl2Visibility(visible : Boolean);
 begin
-   {feggdjgdsdgf}
+   SplineIntervalValForm.Visible := visible;
 end;
 
 procedure TForm1.TabControl3Visibility(visible : Boolean);
