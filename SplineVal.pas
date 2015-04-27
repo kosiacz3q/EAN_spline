@@ -75,10 +75,26 @@ begin
   SetLength(f, n + 1);
 
   for i := 0 to n - 1 do
-    x[i] := StrToFloat(StringGrid1.Cells[i,0]);
+  begin
+    if StringGrid1.Cells[i,0] <> '' then
+      x[i] := StrToFloat(StringGrid1.Cells[i,0])
+    else
+    begin
+      ShowMessage('Wartoœæ komórki [' + IntToStr(i) + ',0] nie mo¿e byæ pusta!');
+      Exit;
+    end;
+  end;
 
   for i := 0 to n - 1 do
-    f[i] := StrToFloat(StringGrid1.Cells[i,1]);
+  begin
+    if StringGrid1.Cells[i,1] <> '' then
+      f[i] := StrToFloat(StringGrid1.Cells[i,1])
+    else
+    begin
+      ShowMessage('Wartoœæ komórki [' + IntToStr(i) + ',1] nie mo¿e byæ pusta!');
+      Exit;
+    end;
+  end;
 
   outVal := naturalsplinevalue(n - 1, x,f, xx, st);
 
@@ -140,7 +156,6 @@ procedure TSplineValForm.StringGrid1SetEditText(Sender: TObject; ACol,
 var
   outVal : Extended;
 begin
-
   if not (Length(StringGrid1.Cells[ACol,ARow]) = 0) then
     if not TryStrToFloat(StringGrid1.Cells[ACol,ARow],outVal) then
     begin

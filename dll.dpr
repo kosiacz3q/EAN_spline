@@ -149,7 +149,9 @@ begin
            for i:=2 downto 0 do
              y:=y*z+a[i];
            naturalsplinevalue:=y
-         end;
+         end
+    else
+        naturalsplinevalue:=-1;
 end;
 
 function naturalsplinevalueInterval (n      : Integer;

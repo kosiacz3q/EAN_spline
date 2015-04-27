@@ -55,6 +55,15 @@ object Form1: TForm1
     TabIndex = 0
     OnChange = TabControl1Change
   end
+  object Memo1: TMemo
+    Left = 576
+    Top = 505
+    Width = 129
+    Height = 25
+    Lines.Strings = (
+      'Memo1')
+    TabOrder = 4
+  end
   object XPManifest1: TXPManifest
     Left = 840
     Top = 480

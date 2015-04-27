@@ -18,6 +18,7 @@ type
     ButtonIntervalValue: TButton;
     ButtonIntervalCoeffs: TButton;
     TabControl1: TTabControl;
+    Memo1: TMemo;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure ButtonSplineCoeffsClick(Sender: TObject);
@@ -114,9 +115,9 @@ begin
   outVal := naturalsplinevalue(n, x,f, xx, st);
 
   if st <> 0 then
-    Memo1.Text := 'some error occured ' + IntToStr(st)
+   // Memo1.Text := 'some error occured ' + IntToStr(st)
   else
-    Memo1.Text := resultToString(outVal);
+   // Memo1.Text := resultToString(outVal);
 end;
 
 procedure TForm1.ButtonSplineCoeffsClick(Sender: TObject);

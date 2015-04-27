@@ -19,8 +19,8 @@ object SplineValForm: TSplineValForm
   object Label1: TLabel
     Left = 15
     Top = 20
-    Width = 15
-    Height = 27
+    Width = 7
+    Height = 13
     Caption = 'N'
   end
   object Label2: TLabel
