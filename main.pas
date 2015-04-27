@@ -10,7 +10,7 @@ uses
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  SplineVal, SplineIntervalVal, SplineCoeffs;
+  SplineVal, SplineIntervalVal, SplineCoeffs, SplineCoeffsInterval;
 
 type
   TForm1 = class(TForm)
@@ -45,6 +45,7 @@ var
   SplineValForm : TSplineValForm;
   SplineIntervalValForm : TSplineIntervalValForm;
   SplineCoeffsForm : TSplineCoeffsForm;
+  SplineCoeffsIntervalForm : TSplineCoeffsIntervalForm;
 
 implementation
 
@@ -229,6 +230,10 @@ begin
     SplineCoeffsForm.Parent := TabControl1;
     SplineCoeffsForm.Visible := False;
 
+    SplineCoeffsIntervalForm := TSplineCoeffsIntervalForm.Create(TabControl1);
+    SplineCoeffsIntervalForm.Parent := TabControl1;
+    SplineCoeffsIntervalForm.Visible := False;
+
     Refresh();
 end;
 
@@ -282,7 +287,7 @@ end;
 
 procedure TForm1.TabControl4Visibility(visible : Boolean);
 begin
-   {feggdjgdsdgf}
+   SplineCoeffsIntervalForm.Visible := visible;
 end;
 
 end.

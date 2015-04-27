@@ -89,11 +89,11 @@ begin
     end;
   end;
 
-  SetLength(a, 10);
-  for i := 0 to 10 do
-    SetLength(a[i], 10);
+  SetLength(a, 4);
+  for i := 0 to 4 do
+    SetLength(a[i], n + 1);
 
-  naturalsplinecoeffns(n,f,x,a,st);
+  naturalsplinecoeffns(n,x,f,a,st);
 
   if st <> 0 then
   begin
@@ -102,12 +102,12 @@ begin
   end
   else
   begin
-      StringGrid2.RowCount := n - 1;
-      StringGrid2.ColCount := 3;
+      StringGrid2.RowCount := n;
+      StringGrid2.ColCount := 4;
 
-      for i := 0 to 3 do
+      for i := 0 to 4 do
       begin
-        for j := 0 to n - 1 do
+        for j := 0 to n do
           StringGrid2.Cells[i,j] := resultToString(a[i,j]);
       end;
   end;

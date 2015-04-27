@@ -1,4 +1,4 @@
-unit SplineVal;
+unit SplineCoeffsInterval;
 
 interface
 
@@ -8,17 +8,16 @@ uses
   Vcl.Mask;
 
 type
-  TSplineValForm = class(TForm)
+  TSplineCoeffsIntervalForm = class(TForm)
     buttonResult: TButton;
     StringGrid1: TStringGrid;
     Label1: TLabel;
     editN: TEdit;
-    ResultMemo: TMemo;
     Label2: TLabel;
     Label3: TLabel;
-    Label4: TLabel;
-    editXX: TEdit;
     ErrorMemo: TMemo;
+    StringGrid2: TStringGrid;
+    procedure editNChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure buttonResultClick(Sender: TObject);
 
@@ -27,34 +26,36 @@ type
     function resultToString(const res : Extended) : string; overload;
     procedure StringGrid1SetEditText(Sender: TObject; ACol, ARow: Integer;
       const Value: string);
-    procedure editXXExit(Sender: TObject);
-    procedure editNExit(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
 
-  function naturalsplinevalue (n      : Integer;
-                             x,f    : array of Extended;
-                             xx     : Extended;
-                             var st : Integer) : Extended; external 'dll.dll';
+  type
+  TExtendedArray = array of Extended;
+
+  procedure naturalsplinecoeffns (n      : Integer;
+                                  x,f    : array of Extended;
+                                  var a  : array of TExtendedArray;
+                                  var st : Integer); external 'dll.dll';
 var
-  SplineValForm: TSplineValForm;
+  SplineCoeffsIntervalForm: TSplineCoeffsIntervalForm;
 
 implementation
 
 {$R *.dfm}
 
 
-procedure TSplineValForm.buttonResultClick(Sender: TObject);
+procedure TSplineCoeffsIntervalForm.buttonResultClick(Sender: TObject);
 var
   n      : Integer;
   x,f    : array of Extended;
-  xx     : Extended;
-  st,i   : Integer ;
-  outVal: Extended;
+  a  : array of TExtendedArray;
+  st : Integer ;
+  i,j : Integer;
 begin
+
   if Length(editN.Text) = 0 then
   begin
     ShowMessage('Wartoœæ N nie mo¿e byæ pusta!');
@@ -62,14 +63,6 @@ begin
   end;
 
   n := StrToInt(editN.Text);
-
-  if Length(editXX.Text) = 0 then
-  begin
-    ShowMessage('Wartoœæ XX nie mo¿e byæ pusta!');
-    Exit;
-  end;
-
-  xx := StrToFloat(editXX.Text);
 
   SetLength(x, n + 1);
   SetLength(f, n + 1);
@@ -96,45 +89,49 @@ begin
     end;
   end;
 
-  outVal := naturalsplinevalue(n - 1, x,f, xx, st);
+  SetLength(a, 10);
+  for i := 0 to 10 do
+    SetLength(a[i], 10);
 
-  if st = 0 then
-    ResultMemo.Text := resultToString(outVal)
+  naturalsplinecoeffns(n,x,f,a,st);
+
+  if st <> 0 then
+  begin
+    StringGrid2.RowCount := 0;
+    StringGrid2.ColCount := 0;
+  end
   else
-    ResultMemo.Text := '';
+  begin
+      StringGrid2.RowCount := n - 1;
+      StringGrid2.ColCount := 3;
+
+      for i := 0 to 3 do
+      begin
+        for j := 0 to n - 1 do
+          StringGrid2.Cells[i,j] := resultToString(a[i,j]);
+      end;
+  end;
 
   showError(st);
 end;
 
-procedure TSplineValForm.editNExit(Sender: TObject);
+procedure TSplineCoeffsIntervalForm.editNChange(Sender: TObject);
 var
   iVal,iCode : Integer;
 begin
   Val(editN.Text, iVal, iCode);
 
-  if (iCode = 0) and (iVal > 0) then
+  if iCode = 0 then
     StringGrid1.ColCount := iVal
   else
   begin
-    ShowMessage('Wprowadzona wartoœæ musi byæ liczb¹ dodatni¹');
+    ShowMessage('Wprowadzona wartoœæ musi byæ liczb¹');
     editN.Text := '1';
-    StringGrid1.ColCount := 1
   end;
+
 end;
 
-procedure TSplineValForm.editXXExit(Sender: TObject);
-var
-  iVal : Extended;
-begin
-   if not ( editXX.Text = '') then
-    if not TryStrToFloat(editXX.Text, iVal) then
-    begin
-      ShowMessage('Wprowadzona wartoœæ musi byæ liczb¹');
-      editXX.Text := '';
-    end;
-end;
-
-procedure TSplineValForm.FormCreate(Sender: TObject);
+procedure TSplineCoeffsIntervalForm.FormCreate(Sender: TObject);
 begin
   StringGrid1.ColCount := 1;
   StringGrid1.RowCount := 0;
@@ -142,7 +139,7 @@ begin
 end;
 
 
-function TSplineValForm.resultToString(const res : Extended) : string;
+function TSplineCoeffsIntervalForm.resultToString(const res : Extended) : string;
 var
     outLeft, outRight : string;
 begin
@@ -150,12 +147,12 @@ begin
     Result := outLeft;
 end;
 
-procedure TSplineValForm.StringGrid1SetEditText(Sender: TObject; ACol,
+procedure TSplineCoeffsIntervalForm.StringGrid1SetEditText(Sender: TObject; ACol,
   ARow: Integer; const Value: string);
 var
   outVal : Extended;
 begin
-  if not ((StringGrid1.Cells[ACol,ARow] = '') or (StringGrid1.Cells[ACol,ARow] = '-')) then
+  if not (Length(StringGrid1.Cells[ACol,ARow]) = 0) then
     if not TryStrToFloat(StringGrid1.Cells[ACol,ARow],outVal) then
     begin
        ShowMessage('Dozwolone tylko wartoœci zmiennoprzecinkowe!');
@@ -163,12 +160,12 @@ begin
     end;
 end;
 
-procedure TSplineValForm.showError(errorCode : Integer);
+procedure TSplineCoeffsIntervalForm.showError(errorCode : Integer);
 begin
   case errorCode of
     0   :  ErrorMemo.Text := '';
     1   :  ErrorMemo.Text := 'Wartoœæ N nie mo¿e byæ mniejsza od 1!';
-    2   :  ErrorMemo.Text := 'Wprowadzono dwie wartoœci dla tego samego wêz³a!';
+    2   :  ErrorMemo.Text := 'Dwa ró¿ne wêz³y nie mog¹ mieæ tej samej wartoœci!';
     3   :  ErrorMemo.Text := 'Szukana wartoœæ nie zawiera siê w przedziale wynikaj¹cym z wêz³ów!';
   end;
 end;

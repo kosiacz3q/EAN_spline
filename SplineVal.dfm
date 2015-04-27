@@ -79,7 +79,7 @@ object SplineValForm: TSplineValForm
     Height = 21
     TabOrder = 2
     Text = '1'
-    OnChange = editNChange
+    OnExit = editNExit
   end
   object ResultMemo: TMemo
     Left = 97
@@ -95,7 +95,7 @@ object SplineValForm: TSplineValForm
     Height = 21
     TabOrder = 4
     Text = '1'
-    OnChange = editXXChange
+    OnExit = editXXExit
   end
   object ErrorMemo: TMemo
     Left = 48

@@ -1,9 +1,9 @@
-object SplineIntervalValForm: TSplineIntervalValForm
+object SplineCoeffsIntervalForm: TSplineCoeffsIntervalForm
   Left = 0
   Top = 0
   Align = alClient
   BorderStyle = bsNone
-  Caption = 'SplineIntervalValForm'
+  Caption = 'SplineCoeffsIntervalForm'
   ClientHeight = 455
   ClientWidth = 950
   Color = clWhite
@@ -14,6 +14,8 @@ object SplineIntervalValForm: TSplineIntervalValForm
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -24,50 +26,22 @@ object SplineIntervalValForm: TSplineIntervalValForm
     Caption = 'N'
   end
   object Label2: TLabel
-    Left = 15
-    Top = 60
-    Width = 14
+    Left = 16
+    Top = 59
+    Width = 6
     Height = 13
-    Caption = 'X_l'
+    Caption = 'x'
   end
   object Label3: TLabel
-    Left = 10
-    Top = 116
-    Width = 26
-    Height = 13
-    Caption = 'f(x)_l'
-  end
-  object Label4: TLabel
-    Left = 16
-    Top = 205
-    Width = 20
-    Height = 13
-    Caption = 'XX_l'
-  end
-  object Label5: TLabel
-    Left = 15
+    Left = 13
     Top = 87
     Width = 18
     Height = 13
-    Caption = 'X_p'
-  end
-  object Label6: TLabel
-    Left = 11
-    Top = 142
-    Width = 30
-    Height = 13
-    Caption = 'f(x)_p'
-  end
-  object Label7: TLabel
-    Left = 16
-    Top = 233
-    Width = 24
-    Height = 13
-    Caption = 'XX_p'
+    Caption = 'f(x)'
   end
   object buttonResult: TButton
     Left = 16
-    Top = 403
+    Top = 187
     Width = 75
     Height = 25
     Caption = 'Oblicz'
@@ -78,12 +52,12 @@ object SplineIntervalValForm: TSplineIntervalValForm
     Left = 48
     Top = 56
     Width = 878
-    Height = 121
+    Height = 73
     BevelWidth = 2
     BorderStyle = bsNone
     ColCount = 2
     FixedColor = clBackground
-    RowCount = 4
+    RowCount = 2
     GradientEndColor = clLime
     GridLineWidth = 2
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goEditing]
@@ -91,50 +65,39 @@ object SplineIntervalValForm: TSplineIntervalValForm
     OnSetEditText = StringGrid1SetEditText
     RowHeights = (
       24
-      24
-      24
       24)
   end
   object editN: TEdit
     Left = 48
     Top = 17
-    Width = 129
+    Width = 64
     Height = 21
     TabOrder = 2
     Text = '1'
-    OnExit = editNExit
-  end
-  object ResultMemo: TMemo
-    Left = 97
-    Top = 403
-    Width = 829
-    Height = 25
-    TabOrder = 3
-  end
-  object editXX: TEdit
-    Left = 48
-    Top = 202
-    Width = 129
-    Height = 21
-    TabOrder = 4
-    Text = '1'
-    OnExit = editXXExit
+    OnChange = editNChange
   end
   object ErrorMemo: TMemo
     Left = 48
-    Top = 268
-    Width = 870
-    Height = 89
-    BorderStyle = bsNone
-    TabOrder = 5
-  end
-  object editXX_l: TEdit
-    Left = 48
-    Top = 229
-    Width = 129
+    Top = 148
+    Width = 878
     Height = 21
-    TabOrder = 6
-    Text = '1'
-    OnExit = editXX_lExit
+    BorderStyle = bsNone
+    TabOrder = 3
+  end
+  object StringGrid2: TStringGrid
+    Left = 104
+    Top = 187
+    Width = 822
+    Height = 246
+    BorderStyle = bsNone
+    ColCount = 1
+    DefaultColWidth = 200
+    FixedCols = 0
+    RowCount = 1
+    FixedRows = 0
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine]
+    TabOrder = 4
+    RowHeights = (
+      24)
   end
 end

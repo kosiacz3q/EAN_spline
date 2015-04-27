@@ -23,9 +23,9 @@ type
     Label6: TLabel;
     Label7: TLabel;
     editXX_l: TEdit;
-    procedure editNChange(Sender: TObject);
+    procedure editNExit(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure editXXChange(Sender: TObject);
+    procedure editXXExit(Sender: TObject);
     procedure buttonResultClick(Sender: TObject);
 
     procedure showError(errorCode : Integer);
@@ -33,7 +33,7 @@ type
     function resultToString(const res : Interval) : string;
     procedure StringGrid1SetEditText(Sender: TObject; ACol, ARow: Integer;
       const Value: string);
-    procedure editXX_lChange(Sender: TObject);
+    procedure editXX_lExit(Sender: TObject);
   private
     { Private declarations }
   public
@@ -82,7 +82,7 @@ begin
 
   for i := 0 to n - 1 do
   begin
-    if StringGrid1.Cells[i,0] <> '' then
+    if ((StringGrid1.Cells[i,0] <> '') and (StringGrid1.Cells[i,0] <> '-')) then
       x[i].a := StrToFloat(StringGrid1.Cells[i,0])
     else
     begin
@@ -93,7 +93,7 @@ begin
 
     for i := 0 to n - 1 do
   begin
-    if StringGrid1.Cells[i,1] <> '' then
+    if((StringGrid1.Cells[i,1] <> '') and (StringGrid1.Cells[i,1] <> '-')) then
       x[i].b := StrToFloat(StringGrid1.Cells[i,1])
     else
     begin
@@ -104,7 +104,7 @@ begin
 
   for i := 0 to n - 1 do
   begin
-    if StringGrid1.Cells[i,2] <> '' then
+    if ((StringGrid1.Cells[i,2] <> '') and (StringGrid1.Cells[i,2] <> '-')) then
       f[i].a := StrToFloat(StringGrid1.Cells[i,2])
     else
     begin
@@ -115,7 +115,7 @@ begin
 
   for i := 0 to n - 1 do
   begin
-    if StringGrid1.Cells[i,3] <> '' then
+    if ((StringGrid1.Cells[i,3] <> '') and (StringGrid1.Cells[i,3] <> '-')) then
       f[i].b := StrToFloat(StringGrid1.Cells[i,3])
     else
     begin
@@ -124,7 +124,7 @@ begin
     end;
   end;
 
-  outVal := naturalsplinevalueInterval(n - 1, f,x, xx, st);
+  outVal := naturalsplinevalueInterval(n - 1, x,f, xx, st);
 
   if st = 0 then
     ResultMemo.Text := resultToString(outVal)
@@ -134,12 +134,12 @@ begin
   showError(st);
 end;
 
-procedure TSplineIntervalValForm.editXX_lChange(Sender: TObject);
+procedure TSplineIntervalValForm.editXX_lExit(Sender: TObject);
 var
   iVal : Extended;
 begin
 
-  if not ( editXX_l.Text = '') then
+  if not (( editXX_l.Text = ''))  then
     if not TryStrToFloat(editXX_l.Text, iVal) then
     begin
       ShowMessage('Wprowadzona wartoœæ musi byæ liczb¹');
@@ -147,23 +147,23 @@ begin
     end;
 end;
 
-procedure TSplineIntervalValForm.editNChange(Sender: TObject);
+procedure TSplineIntervalValForm.editNExit(Sender: TObject);
 var
   iVal,iCode : Integer;
 begin
   Val(editN.Text, iVal, iCode);
 
-  if iCode = 0 then
+  if (iCode = 0 ) and (iVal > 0) then
     StringGrid1.ColCount := iVal
   else
   begin
-    ShowMessage('Wprowadzona wartoœæ musi byæ liczb¹');
+    ShowMessage('Wprowadzona wartoœæ musi byæ liczb¹ dodatni¹');
     editN.Text := '1';
   end;
 
 end;
 
-procedure TSplineIntervalValForm.editXXChange(Sender: TObject);
+procedure TSplineIntervalValForm.editXXExit(Sender: TObject);
 var
   iVal : Extended;
 begin

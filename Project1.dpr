@@ -7,7 +7,8 @@ uses
   IntervalArithmetic32and64 in 'IntervalArithmetic32and64.pas',
   SplineVal in 'SplineVal.pas' {SplineValForm},
   SplineIntervalVal in 'SplineIntervalVal.pas' {SplineIntervalValForm},
-  SplineCoeffs in 'SplineCoeffs.pas' {SplineCoeffsForm};
+  SplineCoeffs in 'SplineCoeffs.pas' {SplineCoeffsForm},
+  SplineCoeffsInterval in 'SplineCoeffsInterval.pas' {SplineCoeffsIntervalForm};
 
 {$R *.res}
 
@@ -19,5 +20,6 @@ begin
   Application.CreateForm(TSplineValForm, SplineValForm);
   Application.CreateForm(TSplineIntervalValForm, SplineIntervalValForm);
   Application.CreateForm(TSplineCoeffsForm, SplineCoeffsForm);
+  Application.CreateForm(TSplineCoeffsIntervalForm, SplineCoeffsIntervalForm);
   Application.Run;
 end.
