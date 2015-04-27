@@ -9,7 +9,8 @@ uses
   IntervalArithmetic32and64, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, SplineVal, SplineIntervalVal;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  SplineVal, SplineIntervalVal, SplineCoeffs;
 
 type
   TForm1 = class(TForm)
@@ -41,23 +42,16 @@ type
 
 var
   Form1: TForm1;
-  SplineValForm: TSplineValForm;
+  SplineValForm : TSplineValForm;
   SplineIntervalValForm : TSplineIntervalValForm;
+  SplineCoeffsForm : TSplineCoeffsForm;
 
 implementation
 
 {$R *.dfm}
 
 type
-  TExtendedArray = array of Extended;
-
-type
   TIntervalArray = array of interval;
-
-procedure naturalsplinecoeffns (n      : Integer;
-                                x,f    : array of Extended;
-                                var a  : array of TExtendedArray;
-                                var st : Integer); external 'dll.dll';
 
 procedure naturalsplinecoeffnsInterval (n      : Integer;
                                 x,f    : array of interval;
@@ -107,9 +101,9 @@ begin
   outVal := naturalsplinevalue(n, x,f, xx, st);
 
   if st <> 0 then
-   // Memo1.Text := 'some error occured ' + IntToStr(st)
+    Memo1.Text := 'some error occured ' + IntToStr(st)
   else
-   // Memo1.Text := resultToString(outVal);
+    Memo1.Text := resultToString(outVal);
 end;
 
 procedure TForm1.ButtonSplineCoeffsClick(Sender: TObject);
@@ -231,6 +225,10 @@ begin
     SplineIntervalValForm.Parent := TabControl1;
     SplineIntervalValForm.Visible := False;
 
+    SplineCoeffsForm := TSplineCoeffsForm.Create(TabControl1);
+    SplineCoeffsForm.Parent := TabControl1;
+    SplineCoeffsForm.Visible := False;
+
     Refresh();
 end;
 
@@ -279,7 +277,7 @@ end;
 
 procedure TForm1.TabControl3Visibility(visible : Boolean);
 begin
-   {feggdjgdsdgf}
+   SplineCoeffsForm.Visible := visible;
 end;
 
 procedure TForm1.TabControl4Visibility(visible : Boolean);

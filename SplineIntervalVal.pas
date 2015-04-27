@@ -74,7 +74,8 @@ begin
     Exit;
   end;
 
-  xx := StrToFloat(editXX.Text);
+  xx.a := StrToFloat(editXX.Text);
+  xx.b := StrToFloat(editXX_l.Text);
 
   SetLength(x, n + 1);
   SetLength(f, n + 1);
@@ -123,7 +124,7 @@ begin
     end;
   end;
 
-  outVal := naturalsplinevalueInterval(n - 1, x,f, xx, st);
+  outVal := naturalsplinevalueInterval(n - 1, f,x, xx, st);
 
   if st = 0 then
     ResultMemo.Text := resultToString(outVal)
@@ -210,7 +211,7 @@ begin
     0   :  ErrorMemo.Text := '';
     1   :  ErrorMemo.Text := 'Wartoœæ N nie mo¿e byæ mniejsza od 1!';
     2   :  ErrorMemo.Text := 'Dwa ró¿ne wêz³y nie mog¹ mieæ tej samej wartoœci!';
-    3   :  ErrorMemo.Text := 'Szukana wartoœæ nie zawiera siê w przedziale podanych w wêz³ach!';
+    3   :  ErrorMemo.Text := 'Szukana wartoœæ nie zawiera siê w przedziale wynikaj¹cym z wêz³ów!';
   end;
 end;
 

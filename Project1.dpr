@@ -5,7 +5,9 @@ uses
   Windows,
   main in 'main.pas' {Form1},
   IntervalArithmetic32and64 in 'IntervalArithmetic32and64.pas',
-  SplineVal in 'SplineVal.pas' {SplineValForm};
+  SplineVal in 'SplineVal.pas' {SplineValForm},
+  SplineIntervalVal in 'SplineIntervalVal.pas' {SplineIntervalValForm},
+  SplineCoeffs in 'SplineCoeffs.pas' {SplineCoeffsForm};
 
 {$R *.res}
 
@@ -15,5 +17,7 @@ begin
   Application.Initialize;
   Application.CreateForm(TForm1, Form1);
   Application.CreateForm(TSplineValForm, SplineValForm);
+  Application.CreateForm(TSplineIntervalValForm, SplineIntervalValForm);
+  Application.CreateForm(TSplineCoeffsForm, SplineCoeffsForm);
   Application.Run;
 end.

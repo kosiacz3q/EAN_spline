@@ -238,12 +238,12 @@ implementation
 
   class operator interval.LessThan(const first,second : interval ) : Boolean;
   begin
-      Result := first.a < second.b;
+      Result := first.b < second.a;
   end;
 
   class operator interval.LessThanOrEqual(const first,second : interval ) : Boolean;
   begin
-      Result := first.a <= second.b;
+      Result := first.b <= second.a;
   end;
 
   class operator interval.Equal(const first,second : interval ) : Boolean;

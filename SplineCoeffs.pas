@@ -1,4 +1,4 @@
-unit SplineVal;
+unit SplineCoeffs;
 
 interface
 
@@ -8,20 +8,17 @@ uses
   Vcl.Mask;
 
 type
-  TSplineValForm = class(TForm)
+  TSplineCoeffsForm = class(TForm)
     buttonResult: TButton;
     StringGrid1: TStringGrid;
     Label1: TLabel;
     editN: TEdit;
-    ResultMemo: TMemo;
     Label2: TLabel;
     Label3: TLabel;
-    Label4: TLabel;
-    editXX: TEdit;
     ErrorMemo: TMemo;
+    StringGrid2: TStringGrid;
     procedure editNChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure editXXChange(Sender: TObject);
     procedure buttonResultClick(Sender: TObject);
 
     procedure showError(errorCode : Integer);
@@ -35,26 +32,30 @@ type
     { Public declarations }
   end;
 
-  function naturalsplinevalue (n      : Integer;
-                             x,f    : array of Extended;
-                             xx     : Extended;
-                             var st : Integer) : Extended; external 'dll.dll';
+  type
+  TExtendedArray = array of Extended;
+
+  procedure naturalsplinecoeffns (n      : Integer;
+                                  x,f    : array of Extended;
+                                  var a  : array of TExtendedArray;
+                                  var st : Integer); external 'dll.dll';
 var
-  SplineValForm: TSplineValForm;
+  SplineCoeffsForm: TSplineCoeffsForm;
 
 implementation
 
 {$R *.dfm}
 
 
-procedure TSplineValForm.buttonResultClick(Sender: TObject);
+procedure TSplineCoeffsForm.buttonResultClick(Sender: TObject);
 var
   n      : Integer;
   x,f    : array of Extended;
-  xx     : Extended;
-  st,i   : Integer ;
-  outVal: Extended;
+  a  : array of TExtendedArray;
+  st : Integer ;
+  i,j : Integer;
 begin
+
   if Length(editN.Text) = 0 then
   begin
     ShowMessage('Wartoœæ N nie mo¿e byæ pusta!');
@@ -62,14 +63,6 @@ begin
   end;
 
   n := StrToInt(editN.Text);
-
-  if Length(editXX.Text) = 0 then
-  begin
-    ShowMessage('Wartoœæ XX nie mo¿e byæ pusta!');
-    Exit;
-  end;
-
-  xx := StrToFloat(editXX.Text);
 
   SetLength(x, n + 1);
   SetLength(f, n + 1);
@@ -96,17 +89,33 @@ begin
     end;
   end;
 
-  outVal := naturalsplinevalue(n - 1, x,f, xx, st);
+  SetLength(a, 10);
+  for i := 0 to 10 do
+    SetLength(a[i], 10);
 
-  if st = 0 then
-    ResultMemo.Text := resultToString(outVal)
+  naturalsplinecoeffns(n,f,x,a,st);
+
+  if st <> 0 then
+  begin
+    StringGrid2.RowCount := 0;
+    StringGrid2.ColCount := 0;
+  end
   else
-    ResultMemo.Text := '';
+  begin
+      StringGrid2.RowCount := n - 1;
+      StringGrid2.ColCount := 3;
+
+      for i := 0 to 3 do
+      begin
+        for j := 0 to n - 1 do
+          StringGrid2.Cells[i,j] := resultToString(a[i,j]);
+      end;
+  end;
 
   showError(st);
 end;
 
-procedure TSplineValForm.editNChange(Sender: TObject);
+procedure TSplineCoeffsForm.editNChange(Sender: TObject);
 var
   iVal,iCode : Integer;
 begin
@@ -122,20 +131,7 @@ begin
 
 end;
 
-procedure TSplineValForm.editXXChange(Sender: TObject);
-var
-  iVal : Extended;
-begin
-
-  if not ( editXX.Text = '') then
-    if not TryStrToFloat(editXX.Text, iVal) then
-    begin
-      ShowMessage('Wprowadzona wartoœæ musi byæ liczb¹');
-      editXX.Text := '';
-    end;
-end;
-
-procedure TSplineValForm.FormCreate(Sender: TObject);
+procedure TSplineCoeffsForm.FormCreate(Sender: TObject);
 begin
   StringGrid1.ColCount := 1;
   StringGrid1.RowCount := 0;
@@ -143,7 +139,7 @@ begin
 end;
 
 
-function TSplineValForm.resultToString(const res : Extended) : string;
+function TSplineCoeffsForm.resultToString(const res : Extended) : string;
 var
     outLeft, outRight : string;
 begin
@@ -151,7 +147,7 @@ begin
     Result := outLeft;
 end;
 
-procedure TSplineValForm.StringGrid1SetEditText(Sender: TObject; ACol,
+procedure TSplineCoeffsForm.StringGrid1SetEditText(Sender: TObject; ACol,
   ARow: Integer; const Value: string);
 var
   outVal : Extended;
@@ -164,7 +160,7 @@ begin
     end;
 end;
 
-procedure TSplineValForm.showError(errorCode : Integer);
+procedure TSplineCoeffsForm.showError(errorCode : Integer);
 begin
   case errorCode of
     0   :  ErrorMemo.Text := '';

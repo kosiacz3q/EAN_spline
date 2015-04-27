@@ -121,9 +121,9 @@ object SplineIntervalValForm: TSplineIntervalValForm
     OnChange = editXXChange
   end
   object ErrorMemo: TMemo
-    Left = 16
-    Top = 308
-    Width = 902
+    Left = 48
+    Top = 268
+    Width = 870
     Height = 89
     BorderStyle = bsNone
     TabOrder = 5

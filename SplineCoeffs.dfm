@@ -1,9 +1,9 @@
-object SplineValForm: TSplineValForm
+object SplineCoeffsForm: TSplineCoeffsForm
   Left = 0
   Top = 0
   Align = alClient
   BorderStyle = bsNone
-  Caption = 'SplineValForm'
+  Caption = 'SplineCoeffsForm'
   ClientHeight = 455
   ClientWidth = 950
   Color = clWhite
@@ -37,16 +37,9 @@ object SplineValForm: TSplineValForm
     Height = 13
     Caption = 'f(x)'
   end
-  object Label4: TLabel
-    Left = 16
-    Top = 149
-    Width = 15
-    Height = 13
-    Caption = 'XX '
-  end
   object buttonResult: TButton
     Left = 16
-    Top = 403
+    Top = 187
     Width = 75
     Height = 25
     Caption = 'Oblicz'
@@ -81,28 +74,28 @@ object SplineValForm: TSplineValForm
     Text = '1'
     OnChange = editNChange
   end
-  object ResultMemo: TMemo
-    Left = 97
-    Top = 403
-    Width = 829
-    Height = 25
-    TabOrder = 3
-  end
-  object editXX: TEdit
-    Left = 48
-    Top = 146
-    Width = 64
-    Height = 21
-    TabOrder = 4
-    Text = '1'
-    OnChange = editXXChange
-  end
   object ErrorMemo: TMemo
     Left = 48
-    Top = 308
+    Top = 148
     Width = 878
-    Height = 89
+    Height = 21
     BorderStyle = bsNone
-    TabOrder = 5
+    TabOrder = 3
+  end
+  object StringGrid2: TStringGrid
+    Left = 104
+    Top = 187
+    Width = 822
+    Height = 246
+    BorderStyle = bsNone
+    ColCount = 1
+    DefaultColWidth = 200
+    FixedCols = 0
+    RowCount = 1
+    FixedRows = 0
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine]
+    TabOrder = 4
+    RowHeights = (
+      24)
   end
 end
